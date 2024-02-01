@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+</head>
+
+<body>
+  <div class="left">
+  <h1>Credit Summary</h1>
+  <div class="input_box">
+    <form action="{{ url_for('summarize')}}"method="post">
+    	<input type="text" name="Input" placeholder="Input" required="required" />
+        <button type="submit" class="btn btn-primary btn-large">Summarize</button>
+    </form>
+  </div>
+  </div>
+
+  <div class="right">
+  <div class="container">
+  <!-- Available Credit Card -->
+  <div class="card" style="background-color:#eff2c0">
+      <div class="card-title" >Available Credit</div>
+      <div class="card-content">{{ available_credit }}</div>
+  </div>
+
+  <!-- Payable Balance Card -->
+  <div class="card" style="background-color:#c7b494">
+      <div class="card-title">Payable Balance</div>
+      <div class="card-content">{{ payable_balance }}</div>
+  </div>
+</div>
+
+<!-- Pending Transactions Card -->
+<div class="container">
+  <div class="card-wide" style="background-color:#ebeedb">
+    <div class="card-title">Pending Transactions</div>
+    <div class="card-wide-content">
+      {% if pending_transactions %}
+        {% for txn_id, details in pending_transactions.items() %}
+        <p>Transaction ID: {{ txn_id }} - Amount: {{ details[0] }} @ Time: {{ details[1] }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+</div>
+</div>
+
+<!-- Settled Transactions Card -->
+<div class="container">
+  <div class="card-wide" style="background-color:#ebeedb">
+    <div class="card-title">Settled Transactions</div>
+    <div class="card-wide-content">
+      {% if settled_transactions %}
+        {% for txn_id, details in settled_transactions.items() %}
+        <p>Transaction ID: {{ txn_id }} - Amount: {{ details[0] }} @ Time: {{ details[1] }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
